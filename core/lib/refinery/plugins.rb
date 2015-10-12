@@ -44,13 +44,6 @@ module Refinery
       first_in_menu_with_url.try(:url)
     end
 
-    def update_positions(plugin_list)
-      plugins = plugin_list.map {|p| find_by_name(p) }.reject(&:blank?)
-      plugins.each_with_index do |plugin, index|
-        plugin.update_attributes(position: index)
-      end
-    end
-
     class << self
       def always_allowed
         new registered.select(&:always_allow_access)
@@ -64,9 +57,5 @@ module Refinery
     private
 
     attr_reader :plugins
-
-    def prioritised
-      Refinery::Core.config.plugin_priority.map { |name| find_by_name(name) }
-    end
   end
 end
