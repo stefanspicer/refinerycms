@@ -14,6 +14,8 @@ var GlassButtons = (function ($) {
     if ($('.cms-interface').length > 0) {
       $(element).find("[title!=''][title]").each(function () {
         if ($(this).is("a, label, .btn")) {
+          // $(this).attr("data-tooltip", $(this).attr("title"));
+          // $(this).removeAttr("title");
           $(this).tooltip({trigger: "hover"});
         }
       });
