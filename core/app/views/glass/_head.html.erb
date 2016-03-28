@@ -5,9 +5,9 @@
   <%= csrf_meta_tags %>
 <% else %>
   <title><%= browser_title(yield(:title)) %></title>
-  <%= raw %(<meta name="description" content="#{@meta.meta_description}" />) if @meta.meta_description.present? -%>
-  <% @canonical = "#{request.protocol}#{request.host_with_port}#{@canonical}" if @canonical.present? && !(@canonical =~ /^(?:http|\/\/)/) %>
-  <%= raw %(<link rel="canonical" href="#{@canonical}" />) if @canonical.present? -%>
+  <%= tag(:meta, name: 'description', content: @meta.meta_description) if @meta.meta_description.present? -%>
+  <% @canonical = request.protocol+request.host_with_port+@canonical if @canonical.present? && !(@canonical =~ /^(?:http|\/\/)/) %>
+  <%= tag(:link, href: @canonical, rel: 'canonical') if @canonical.present? -%>
   <%= csrf_meta_tags if Refinery::Core.authenticity_token_on_frontend -%>
 
   <% if defined?(@og) && @og.present? %>
@@ -23,6 +23,7 @@
 <% end %>
 
 <meta charset='<%= Rails.application.config.encoding %>' />
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="apple-mobile-web-app-capable" content="yes">
