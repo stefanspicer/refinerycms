@@ -239,12 +239,12 @@ var GlassContentEditing = (function ($) {
   $(document).on('content-ready', function (e, element) {
     var $container = $(element).find('#page-preview').length > 0 ? $(element).find('#page-preview') : $(element);
 
+    // set #domain-name to the current domain
+    $(element).find('#domain-name, .domain-name').each(function () {$(this).html('http://' + window.location.hostname)});
+
     if ($container.attr('id') != 'page-preview' && $container.parents('#page-preview').length < 1) {
       return;
     }
-
-    // set #domain-name to the current domain
-    $(element).find('#domain-name').html('http://' + window.location.hostname);
 
     // if there is a #page-preview somewhere, we'll grab all .glass-edit's (over in the sidebar too)
     var $glass_editables = $(element).find('.glass-edit');
