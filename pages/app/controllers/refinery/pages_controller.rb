@@ -74,7 +74,11 @@ module Refinery
                 when "show"
                   Refinery::Page.friendly.find_by_path_or_id(params[:path], params[:id])
                 end
-      @page || (error_404 if fallback_to_404)
+      @page || hook_before_404 || (error_404 if fallback_to_404)
+    end
+
+    def hook_before_404
+      false
     end
 
     alias_method :page, :find_page
