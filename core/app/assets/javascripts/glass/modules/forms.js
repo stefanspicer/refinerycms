@@ -410,10 +410,12 @@ var CanvasForms = (function ($) {
           var $error_response = null;
           var $replacement = $('<p>Thank you</p>'); // Default response message
           var status_message = undefined;
+          var redirect_url   = null;
 
           // Determine error or success and set variables appropriately
           if (xhr.responseJSON) {
             status_message = xhr.responseJSON.message;
+            redirect_url   = xhr.responseJSON.redirect_url;
 
             if (xhr.status == 200) {
               if (!status_message) {
@@ -461,7 +463,7 @@ var CanvasForms = (function ($) {
           }
           else {
             $form.data("allow-unload", true);
-            handleSuccess($form, $replacement);
+            handleSuccess($form, $replacement, redirect_url);
           }
 
           resetSubmit($form);
@@ -489,7 +491,7 @@ var CanvasForms = (function ($) {
     $form.data("submit-btns").attr('disabled', 'disabled');
   }
 
-  function handleSuccess($form, $replacement) {
+  function handleSuccess($form, $replacement, redirect_url) {
     var $submit_btn      = $form.data("submit-btn");
     var $modal           = $form.parents('.modal');
     $form.find('.errorExplanation').addClass('hidden-xs-up');
@@ -503,9 +505,11 @@ var CanvasForms = (function ($) {
       $modal.modal('hide');
     }
     else if ($form.data('redirect-on-success')) {
-      var redirect_url = $submit_btn.data('redirect-url');
+      if (!redirect_url) { // priority goes to url from response
+        redirect_url = $submit_btn.data('redirect-url');
+      }
 
-      if (redirect_url !== undefined && redirect_url !== null) {
+      if (redirect_url) {
         window.location.href = redirect_url;
       } else if($replacement !== null) {
         // inquiries engine puts an h1 in there
