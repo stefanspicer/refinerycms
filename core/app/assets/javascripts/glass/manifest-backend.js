@@ -23,6 +23,7 @@
 //= require glass/modules/menus
 //= require glass/modules/glass-uploader
 //= require glass/modules/image-upload
+//= require glass/modules/image-editing
 //= require glass/modules/modal-create
 //= require glass/modules/search
 //= require glass/editor/moduleBase

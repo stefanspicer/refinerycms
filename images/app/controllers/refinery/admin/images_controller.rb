@@ -61,33 +61,9 @@ module Refinery
       def update
         @image.attributes = image_params
         if @image.valid? && @image.save
-          flash.notice = t('refinery.crudify.updated', what: "'#{@image.title}'")
-
-          if from_dialog?
-            self.index
-            @dialog_successful = true
-            render :index
-          else
-            if params[:continue_editing] =~ /true|on|1/
-              if request.xhr?
-                render partial: '/refinery/message'
-              else
-                redirect_to :back
-              end
-            else
-              redirect_back_or_default refinery.admin_images_path
-            end
-          end
+          return render json: {message: 'updated!'}, status: 200
         else
-          @thumbnail = Image.find params[:id]
-          if request.xhr?
-            render partial: '/refinery/admin/error_messages', locals: {
-                     object: @image,
-                     include_object_name: true
-                   }
-          else
-            render 'edit'
-          end
+          return render json: {image_id: nil, message: 'validation failed', errors: @image.errors}, status: 400
         end
       end
 
@@ -141,7 +117,7 @@ module Refinery
 
       def permitted_image_params
         [
-          { image: [] }, :image_size, :image_title, :image_alt
+          { image: [] }, :image_size, :image_title, :image_alt, :gravity
         ]
       end
 

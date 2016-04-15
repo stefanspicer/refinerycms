@@ -1,0 +1,31 @@
+<div class="module-options abs-b-r">
+  <!-- BUTTON TO SHOW IMG WEIGHT BUTTONS -->
+  <button class="image-weight-edit-btn btn btn-white btn-circle btn-sm glass-ui">
+    <i class="icon icon-move bump-up"></i>
+  </button>
+
+  <!-- IMG WEIGHT BUTTONS -->
+  <div class="weight-controls-container white-bg border-radius" style="display: none" data-image-input-id="<%= form_id %>">
+    <div class="flex">
+      <button class="btn btn-link" data-gravity="nw"><i class="icon icon-left rotate-45"></i></button>
+      <button class="btn btn-link" data-gravity="n"><i  class="icon icon-up"></i></button>
+      <button class="btn btn-link" data-gravity="ne"><i class="icon icon-up rotate-45 bump-left"></i></button>
+    </div>
+    <div class="flex">
+      <button class="btn btn-link" data-gravity="w"><i class="icon icon-left"></i></button>
+      <button class="btn btn-link" data-gravity="c"><i class="icon icon-dot"></i></button>
+      <button class="btn btn-link" data-gravity="e"><i class="icon icon-right"></i></button>
+    </div>
+    <div class="flex">
+      <button class="btn btn-link" data-gravity="sw"><i class="icon icon-down rotate-45 bump-left"></i></button>
+      <button class="btn btn-link" data-gravity="s"><i  class="icon icon-down"></i></button>
+      <button class="btn btn-link" data-gravity="se"><i class="icon icon-right rotate-45 bump-right"></i></button>
+    </div>
+  </div>
+
+  <!-- IMG UPLOAD/EDIT BUTTON -->
+  <button class="image-upload-btn btn btn-white btn-circle btn-sm glass-ui" data-image-input-id="<%= form_id %>">
+    <i class="icon icon-photo bump-up"></i>
+    <progress class="progress progress-info hidden-xs-up" value="0" max="100"></progress>
+  </button>
+</div>
