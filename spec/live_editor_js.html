@@ -19,7 +19,9 @@
           foobar
         </div>
         <div class="expect">
-          foobar
+          <p>
+            foobar
+          </p>
         </div>
       </div>
 
@@ -30,9 +32,11 @@
           <a>another</a> end
         </div>
         <div class="expect">
-          link testing <a href="http://example.com" target="_blank">extern</a>
-          <a href="/example">internal</a>
-          <a>another</a> end
+          <p>
+            link testing <a href="http://example.com" target="_blank">extern</a>
+            <a href="/example">internal</a>
+            <a>another</a> end
+          </p>
         </div>
       </div>
 
@@ -94,7 +98,7 @@
             <li>item 2</li>
           </ul>
           <p>fox jumped over the</p>
-          <blockquote>quoted</blockquote>
+          <blockquote class="blockquote">quoted</blockquote>
           <p>lazy dog again</p>
         </div>
       </div>
@@ -110,7 +114,7 @@
           </div>
         </div>
         <div class="expect">
-          the pre thing foobar
+          <p>the pre thing foobar</p>
         </div>
       </div>
 
@@ -172,6 +176,50 @@
             <p style="height: 40px;">foo</p>
           </div>
           <p>after in font</p>
+        </div>
+      </div>
+
+      <div class="testcase">
+        <div class="input">
+          <div>split us&nbsp;up with nbsp</div>
+        </div>
+        <div class="expect">
+          <p>split us&nbsp;up with nbsp</p>
+        </div>
+      </div>
+
+      <div class="testcase">
+        <div class="input">
+          http://www.ncregister.com/<wbr>daily-news/
+        </div>
+        <div class="expect">
+          <p>http://www.ncregister.com/daily-news/</p>
+        </div>
+      </div>
+
+      <div class="testcase">
+        <div class="input">
+          <meta http-equiv="content-type" content="text/html; charset=utf-8">
+          <blockquote type="cite" style="margin: 0px 0px 0px 0.8ex;">
+            <div>
+              <div style="font-size: 12pt;">
+                <p>Start <a href="http://m.org/">http://m.org/</a>.</p>
+                <p><br></p>
+                <p style="font-family: Calibri">Campus Issues:</p>
+                <div style="font-family: Calibri; font-size: 16px;">‘Real’ Gives (link is&nbsp;</div>
+                <span style="font-family: Calibri; font-size: 16px;">&nbsp;</span>
+                <a href="http://www.nc.com/" style="color: rgb(126, 87, 194);">http://www.nc.com/</a>
+                <span style="font-family: Calibri; font-size: 16px;">), from&nbsp;</span>
+                <span style="font-family: Calibri; font-size: 16px;">Peter</span>
+              </div>
+            </div>
+          </blockquote>
+        </div>
+        <div class="expect">
+          <p>Start <a href="http://m.org/">http://m.org/</a>.</p>
+          <p><br></p>
+          <p>Campus Issues:</p>
+          <p>‘Real’ Gives (link is&nbsp; &nbsp; <a href="http://www.nc.com/">http://www.nc.com/</a> ), from&nbsp; Peter</p>
         </div>
       </div>
 

@@ -28,8 +28,8 @@ function fh(html) {
 }
 
 $(function () {
-  expect(fh('<p>before <span>in</span> after</p>'), 'before in after');
-  expect(fh('<foo>stuff</foo>'), 'stuff')
+  expect(fh('<p>before <span>in</span> after</p>'), '<p>before in after</p>');
+  expect(fh('<foo>stuff</foo>'), '<p>stuff</p>')
 
   $('.testcase').each(function (){
     expect(fh($(this).find('.input').html()), $(this).find('.expect').html());
