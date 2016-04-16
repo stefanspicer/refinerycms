@@ -241,6 +241,18 @@ function GlassHtmlEditor($elem) {
     this_editor.triggerChangeFocus(null, null);
   });
 
+  // counter act Chrome inserting <span style="font-size: 1rem; line-height: 1.5;"> when merging 2 paragraphs
+  // This is triggered in a number of ways, backspace, delete, or replacing a "text</p><p>more text"
+  this.h.elem.on("DOMNodeInserted", function(e) {
+    if (e.target.tagName == "SPAN" && $(e.target).parents('.glass-no-edit').length == 0 && !$(e.target).hasClass('glass-control')) {
+      var helper = $("<b>helper</b>");
+      $(e.target).before(helper);
+      helper.after($(e.target).contents());
+      helper.remove();
+      $(e.target).remove();
+    }
+  });
+
   grande.bind(document.querySelectorAll(".glass-edit-html"));
 
   return this;
