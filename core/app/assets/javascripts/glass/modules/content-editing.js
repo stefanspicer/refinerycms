@@ -114,6 +114,10 @@ var GlassContentEditing = (function ($) {
     return null;
   }
 
+  function getParentModule($elem) {
+    return getWrappingEditor($elem).parentModule($elem);
+  }
+
   // #############################################################
   // # Save & Retrieve to DB (via hidden form)                   #
   // #############################################################
@@ -280,6 +284,7 @@ var GlassContentEditing = (function ($) {
   // Return API for other modules
   return {
     getWrappingEditor: getWrappingEditor,
+    getParentModule:   getParentModule,
     filterPasteEvents: filterPasteEvents,
     getFormForElement: getFormForElement
   };

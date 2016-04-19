@@ -77,7 +77,7 @@ function GlassModule($elem, $editor, do_construction) {
   };
 
   this.isClickpadable = function() {
-    return !(this.inaGroup() || this.element().hasClass('no-click-pads') || GlassModule.modules_without_clickpads[this.glass_id()]);
+    return GlassModule.modules_with_clickpads[this.glass_id()] && !(this.inaGroup() || this.element().hasClass('no-click-pads'));
   };
 
   this.resetClickPads = function() {
@@ -122,6 +122,9 @@ function GlassModule($elem, $editor, do_construction) {
       else if (this.element().prop('nodeName') == 'DIV') {
         console.warn("ERROR: div in html content has no glass_id");
         module_type = 'unknown';
+      }
+      else if (this.element().prop('nodeName') == 'BLOCKQUOTE') {
+        module_type = 'blockquote';
       }
       else {
         module_type = 'basic';
@@ -238,8 +241,12 @@ GlassModule.deletable_modules = {
   'custom-html': true
 };
 
-GlassModule.modules_without_clickpads = {
-  'basic': true,
+GlassModule.modules_with_clickpads = {
+  'group':      true,
+  'img':        true,
+  'vid':        true,
+  'cusom-html': true,
+  'unknown':    true,
 };
 
 GlassModule.newModuleHtml = function(glass_id) {

@@ -187,7 +187,7 @@ GlassControl.newControl = function(glass_id) {
   }
   $control = $elem.length > 0 ? $elem.first().glassHtmlControl() : null;
 
-  return $elem.length > 0 ? $elem.glassHtmlControl() : null;
+  return $control;
 }
 
 GlassControl.vidUrlToEmbed = function(vid_link, color) {

@@ -90,6 +90,8 @@ function GlassHtmlEditor($elem) {
   this.exportHtml = function() {
     var $wrapper = this.h.elem.clone();
 
+    GlassModule.call_cbs('global', 'serialize', [$wrapper]);
+
     // Remove all editor control modules
     $wrapper.find('.glass-control').remove(); // All the delete btns and stuff
 
@@ -255,6 +257,8 @@ function GlassHtmlEditor($elem) {
 
   grande.bind(document.querySelectorAll(".glass-edit-html"));
 
+  GlassControl.call_cbs('global', 'pre-init', []);
+
   return this;
 }
 
@@ -274,18 +278,19 @@ var formatElementAttrs = function($elem) {
   }
 
   var $result = $(['<', tagName, '>', $elem.html(), '</', tagName, '>'].join(''));
-  if (tagName == 'a') {
-    $result.attr('href',   $elem.attr('href'));
-    $result.attr('target', $elem.attr('target'));
-  }
-  if (tagName == 'blockquote' || $elem.hasClass('blockquote')) {
-    $result.addClass('blockquote');
+
+  var attrs_map = GlassHtmlEditor.preserve_attrs_map;
+
+  if (tagName in attrs_map && $elem.is(attrs_map[tagName]['selector'])) {
+    $.each(attrs_map[tagName]['attributes'], function(i, attr) {
+      $result.attr(attr, $elem.attr(attr));
+    });
   }
   return $result;
 };
 
 var top_level_elements = 'p, ul, ol, h1, h2, h3, h4, h5, h6, hr, blockquote, .glass-no-edit';
-var sub_level_elements = 'b, i, a, li, br, em, strong, s';
+var sub_level_elements = 'b, i, a, li, br, em, strong, s, .blockquote-footer';
 var gonner_elements    = ['noscript, script, style, meta, base, head, style, title, area, audio, map, track, video, ',
                           'iframe, embed, object, param, source, img, canvas, del, ins, svg, form, input, select'].join('');
 var tag_translations   = { 'i': 'em', 'b': 'strong', 'h1': 'h2', 'h4': 'h3', 'h5': 'h3', 'h6': 'h3' };
@@ -382,4 +387,14 @@ formatHtmlBlock = function($wrapper) {
 
 GlassHtmlEditor.formatHtml = function(html) {
   return formatHtmlBlock($('<div>' + html + '</div>'));
+};
+
+GlassHtmlEditor.preserve_attrs_map = {};
+
+GlassHtmlEditor.preserveAttrs = function(tagname, attributes, selector) {
+  if (!selector) {
+    selector = '*';
+  }
+
+  GlassHtmlEditor.preserve_attrs_map[tagname] = {attributes: attributes, selector: selector};
 };

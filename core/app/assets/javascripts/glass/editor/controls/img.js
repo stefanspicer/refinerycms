@@ -34,9 +34,9 @@ GlassControl.on('choose-module', 'attach', function(this_control) {
       if (!(next_module && next_module.isGroupable())) {
         // Add a <p> unless another image directly follows (user may want to link them)
         var $new_p = module.editor().newModule('p', 'after', module);
-        // FIXME - this doesn't seem to want to focus()
-        // FIXME: $new_p.element().attr('contenteditable', true);
-        // FIXME: $new_p.element().focus();
+        // TODO - this doesn't seem to want to focus()
+        // TODO: $new_p.element().attr('contenteditable', true);
+        // TODO: $new_p.element().focus();
       }
 
       var next_module = module.next_module();

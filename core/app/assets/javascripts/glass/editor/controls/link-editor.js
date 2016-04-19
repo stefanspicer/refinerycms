@@ -33,6 +33,27 @@ GlassModule.on('*', 'init', function(this_module) {
   }, 400);
 });
 
+GlassControl.on('global', 'pre-init', function() {
+  grande.addMenuItem("a", {"tagname": "a", "position": 40, "icon_slug": "link"});
+
+  grande.setMenuCallback("a", function (option, context) {
+    document.execCommand("createLink", false, "/temporary");
+    // setTimeout(function() {
+    var $link = $('a[href$="temporary"]');
+    $link.attr('target', '_blank');
+    $link.attr('href', '');
+    $link.attr('contenteditable', false);
+    $link.glassHtmlModule().attachControl('link-editor');
+    $('#glass-module-link-editor input#url').focus();
+
+    grande.hideMenu();
+    // }, 150);
+    return;
+  });
+
+  GlassHtmlEditor.preserveAttrs('a', ['href', 'target']);
+});
+
 GlassControl.on('link-editor', 'pre-init', function(this_control) {
   this_control.delete_link = function () {
     var text = this_control.element().find('input#link-text').val();

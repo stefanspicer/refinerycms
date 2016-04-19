@@ -10,6 +10,13 @@
       options = {
         animate: true
       },
+      menu_meta = {
+        "b":          {"tagname": "b",          "position": 10, "icon_slug": "bold"},
+        "i":          {"tagname": "i",          "position": 15, "icon_slug": "italic"},
+        "h2":         {"tagname": "h2",         "position": 22, "icon_slug": "heading", "extra_html": "<sub>1</sub>"},
+        "h3":         {"tagname": "h3",         "position": 23, "icon_slug": "heading", "extra_html": "<sub>2</sub>"},
+        "blockquote": {"tagname": "blockquote", "position": 30, "icon_slug": "quote"},
+      },
       textMenu,
       optionsNode,
       //previouslySelectedText,
@@ -27,36 +34,35 @@
 
           attachToolbarTemplate();
           bindTextSelectionEvents();
-          bindTextStylingEvents();
+          recreateAndBindHighlightMenu();
         },
         select: function() {
           triggerTextSelection();
-        }
-      },
-
-      tagClassMap = {
-        "b": "bold",
-        "i": "italic",
-        "h2": "header2",
-        "h3": "header3",
-        "a": "url",
-        "blockquote": "quote"
+        },
+        hideMenu: function() {
+          textMenu.className = "highlight-menu hide";
+        },
+        addMenuItem: function(item_id, item) {
+          menu_meta[item_id] = item;
+          recreateAndBindHighlightMenu();
+        },
+        setMenuCallback: function(item_id, cb) {
+          if (!(item_id in menu_meta)) {
+            menu_meta[item_id] = {};
+          }
+          menu_meta[item_id]["callback"] = cb;
+        },
       };
 
   function attachToolbarTemplate() {
     var div = document.createElement("div"),
         toolbarTemplate = "<div class='highlight-menu-inner glass-ui'> \
           <span class='menu-buttons'> \
-            <button class='bold'><i class='icon icon-bold'></i></button> \
-            <button class='italic'><i class='icon icon-italic'></i></button> \
-            <button class='header2'><i class='icon icon-heading'></i><sub>1</sub></button> \
-            <button class='header3'><i class='icon icon-heading'></i><sub>2</sub></button> \
-            <button class='quote'><i class='icon icon-quote'></i></button> \
-            <button class='url'><i class='icon icon-link'></i></button> \
           </span> \
         </div>",
         imageTooltipTemplate = document.createElement("div"),
         toolbarContainer = document.createElement("div");
+
 
     toolbarContainer.className = "highlight-menu-wrapper";
     document.body.appendChild(toolbarContainer);
@@ -224,7 +230,22 @@
     }
   }
 
-  function bindTextStylingEvents() {
+  function recreateAndBindHighlightMenu() {
+    // create a new menu
+    var menu_btns = $.map(menu_meta, function(v, k) { return $.extend({"id": k}, v); })
+                    .sort(function(a, b) {return a.position - b.position})
+                    .map(function(o) {
+                      return [
+                        "<button data-option-id='" + o['id'] + "'>",
+                          "<i class='icon icon-" + o['icon_slug'] + "'></i>",
+                          ('extra_html' in o) ? o['extra_html'] : '',
+                        "</button>"
+                      ].join('');
+                    })
+                    .join('');
+    $('.highlight-menu-inner .menu-buttons').html(menu_btns);
+
+    // bind events
     iterateTextMenuButtons(function(node) {
       node.onmousedown = function(event) {
         triggerTextStyling(node);
@@ -242,22 +263,13 @@
         tagClass,
         reTag;
 
-    iterateTextMenuButtons(function(node) {
-      className = node.className;
+    // for each menu_item
+    iterateTextMenuButtons(function(menu_item) {
+      $(menu_item).removeClass('active');
 
-      for (var tag in tagClassMap) {
-        tagClass = tagClassMap[tag];
-        reTag = new RegExp(tagClass);
-
-        if (reTag.test(className)) {
-          if (hasParentWithTag(focusNode, tag)) {
-            node.className = tagClass + " active";
-          } else {
-            node.className = tagClass;
-          }
-
-          break;
-        }
+      var option = menu_meta[$(menu_item).data('option-id')];
+      if ("tagname" in option && hasParentWithTag(focusNode, option["tagname"])) {
+        $(menu_item).addClass('active');
       }
     });
   }
@@ -390,52 +402,33 @@
     selection.addRange(range);
   }
 
-  function triggerTextStyling(node) {
-    var className = node.className,
+  function triggerTextStyling(menu_item) {
+    var option = menu_meta[$(menu_item).data('option-id')],
         sel = window.getSelection(),
-        selNode = sel.anchorNode,
-        tagClass,
-        reTag;
+        selNode = sel.anchorNode;
 
-    for (var tag in tagClassMap) {
-      tagClass = tagClassMap[tag];
-      reTag = new RegExp(tagClass);
-
-      if (reTag.test(className)) {
-        switch(tag) {
-          case "b":
-            if (selNode && !hasParentWithTag(selNode, "h1") && !hasParentWithTag(selNode, "h2")) {
-              document.execCommand(tagClass, false);
-            }
-            return;
-          case "i":
-            document.execCommand(tagClass, false);
-            return;
-
-          case "h1":
-          case "h2":
-          case "h3":
-          case "blockquote":
-            toggleFormatBlock(tag);
-            return;
-
-          case "a":
-            document.execCommand("createLink", false, "/temporary");
-            // setTimeout(function() {
-            var $link = $('a[href$="temporary"]');
-            $link.attr('target', '_blank');
-            $link.attr('href', '');
-            $link.attr('contenteditable', false);
-            $link.glassHtmlModule().attachControl('link-editor');
-            $('#glass-module-link-editor input#url').focus();
-            textMenu.className = "highlight-menu hide";
-            // }, 150);
-            return;
+    switch(option["tagname"]) {
+      case "b":
+        if (selNode && !hasParentWithTag(selNode, "h1") && !hasParentWithTag(selNode, "h2")) {
+          document.execCommand("bold", false);
         }
-      }
+        break;
+      case "i":
+        document.execCommand("italic", false);
+        break;
+      case "h1":
+      case "h2":
+      case "h3":
+        toggleFormatBlock(option["tagname"]);
+        break;
     }
 
-    triggerTextSelection();
+    if ("callback" in option) {
+      var p = getParent(getFocusNode(), function(n) {return n.nodeName != "#text";}, function(n) {return n;});
+      option["callback"](option, {"selection": sel, "parent_element": p});
+    }
+
+    reloadMenuState();
   }
 
   function toggleFormatBlock(tag) {
@@ -444,9 +437,6 @@
       document.execCommand("outdent");
     } else {
       document.execCommand("formatBlock", false, tag);
-      if (tag == "blockquote") {
-        $(editableNodes).find("blockquote").addClass("blockquote");
-      }
     }
   }
 

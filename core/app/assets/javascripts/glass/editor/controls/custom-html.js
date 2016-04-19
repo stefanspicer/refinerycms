@@ -31,12 +31,10 @@ GlassControl.on('custom-html-form', 'attach', function(this_control) {
 
 
 GlassModule.on('custom-html', 'init', function(this_module) {
-  // console.log("FIXME: init custom html");
   this_module.attachControl('custom-html-edit-btn');
 });
 
 GlassControl.on('custom-html-edit-btn', 'init', function(this_control) {
-  // console.log("FIXME: init edit btn");
   this_control.element().click(function (e) {
     this_control.module().attachControl('custom-html-form');
   });
