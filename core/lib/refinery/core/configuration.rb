@@ -32,7 +32,7 @@ module Refinery
     self.visual_editor_javascripts = []
     self.visual_editor_stylesheets = []
     self.plugin_priority = []
-    self.editable_btn_icons = false
+    self.editable_btn_icons = []
 
     def config.register_javascript(name)
       self.javascripts << name

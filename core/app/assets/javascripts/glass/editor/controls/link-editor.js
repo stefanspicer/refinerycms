@@ -76,7 +76,7 @@ GlassControl.on('link-editor', 'init', function(this_control) {
     var extern      = GlassControl.isExternalUrl(url);
     var resource_id = this_control.element().find('input#resource-id').val();
     var $link       = this_control.module().element();
-    var icon_str    = this_control.element().find('input#icon-string').val();
+    var $icon_str   = this_control.element().find('#icon-string');
     var $icon       = $link.find('i');
 
     if (!url || !text) {
@@ -93,10 +93,10 @@ GlassControl.on('link-editor', 'init', function(this_control) {
       resource_id ? $link.attr('data-resource-id', resource_id) : $link.removeAttr('data-resource-id');
       extern      ? $link.attr('target', '_blank')              : $link.removeAttr('target');
 
-      if (icon_str) {
+      if ($icon_str.val()) {
         $icon = $icon.length > 0 ? $icon.first() : $('<i />');
         $link.html(' ' + $link.html());
-        $icon.attr('class', 'icon icon-' + icon_str + this_control.element().find('input#icon-string').data('other_icon_classes'));
+        $icon.attr('class', 'icon icon-' + $icon_str.val() + $icon_str.data('other_icon_classes'));
         $link.prepend($icon);
       }
     }
@@ -177,9 +177,9 @@ GlassControl.on('link-editor', 'attach', function(this_control) {
       other_icon_classes = matches[1].trim() + ' ' + matches[3].trim();
     }
   }
-  var icon_str_input = this_control.element().find('input#icon-string');
-  icon_str_input.val(icon_str);
-  icon_str_input.data('other_icon_classes', other_icon_classes);
+  var $icon_str_input = this_control.element().find('#icon-string');
+  $icon_str_input.val(icon_str);
+  $icon_str_input.data('other_icon_classes', other_icon_classes);
   this_control.element().find('input#link-text').val($link_copy.text().trim());
   var extern = module.element().attr('target') == '_blank';
   this_control.element().find('input#is-external').prop('checked', extern);

@@ -62,8 +62,12 @@
       </div>
       <input type="hidden" value="" id="resource-id">
       <div class="form-group m-b-0 flex align-items-center">
-        <label for="icon-string" class="sr-only">Icon String</label>
-        <input id="icon-string" type="text" class="form-control <%= 'hidden-xs-up' unless Refinery::Core.editable_btn_icons %>" style="max-width: 150px;" placeholder="Icon String">
+        <% if Refinery::Core.editable_btn_icons.present? %>
+          <label for="icon-string" style="padding: 0.375rem 1rem; margin: 0;">Optional Icon</label>
+          <%= select_tag "icon-string", options_for_select(Refinery::Core.editable_btn_icons), {include_blank: true, class: "form-control", style: "max-width: 150px;"} %>
+        <% else %>
+          <input id="icon-string" type="hidden">
+        <% end %>
         <div class="checkbox m-b-0 hidden-xs-up">
           <label><input id="is-external" type="checkbox"> External link</label>
         </div>
