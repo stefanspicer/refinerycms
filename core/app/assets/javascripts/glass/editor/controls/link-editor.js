@@ -57,8 +57,11 @@ GlassControl.on('global', 'pre-init', function() {
 GlassControl.on('link-editor', 'pre-init', function(this_control) {
   this_control.delete_link = function () {
     var text = this_control.element().find('input#link-text').val();
-    this_control.module().element().before(text);
-    this_control.module().remove();
+    var $link = this_control.module().element();
+    if (!$link.hasClass('btn')) {
+      $link.before(text);
+    }
+    $link.remove();
   };
 });
 
