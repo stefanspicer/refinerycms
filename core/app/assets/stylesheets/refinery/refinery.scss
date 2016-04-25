@@ -20,3 +20,15 @@
 @import 'sections/layout';
 
 @import 'site_bar';
+
+
+/********************************************
+ * Shared Back and Frontend
+ ********************************************/
+@import "glass/config/base-variables";
+
+// BOOTSTRAP OVERRIDES:
+@import "glass/config/global-bootstrap-overrides";
+
+// BOOTSTRAP:
+@import "glass/bootstrap/bootstrap";
