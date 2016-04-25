@@ -1,5 +1,16 @@
 module Refinery
   class Plugin
+    META = {
+      "refinery_pages"                 => { icon: 'icon icon-pages'           },
+      "refinerycms_blog"               => { icon: 'icon icon-feather'         },
+      "refinerycms_inquiries"          => { icon: 'icon icon-chat'            },
+      "refinery_authentication_devise" => { icon: 'icon icon-group'           },
+      "refinery_settings"              => { icon: 'icon icon-gears'           },
+      "refinery_images"                => { icon: 'icon icon-photo bump-down' },
+      "refinery_files"                 => { icon: 'icon icon-export'          },
+    }
+
+    META.default                       =  { icon: 'icon icon-wrench'  }
 
     attr_accessor :name, :class_name, :controller, :directory, :url,
                   :always_allow_access, :menu_match, :hide_from_menu,
@@ -63,6 +74,14 @@ module Refinery
       else
         @url
       end
+    end
+
+    def icon
+      @icon_str.presence || Refinery::Plugin::META[self.name][:icon]
+    end
+
+    def icon=(val)
+      @icon_str = val
     end
 
     def initialize

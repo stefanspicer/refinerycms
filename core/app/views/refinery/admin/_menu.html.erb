@@ -7,7 +7,7 @@
       <% if content_for?(:custom_sidebar_header_link) %>
         <%= yield :custom_sidebar_header_link %>
       <% else %>
-        <%= link_to Refinery::Core.site_name, '/', :class => 'ellipsis' %>
+        <i class="icon icon-bars"></i> <%= link_to Refinery::Core.site_name, '/', :class => 'ellipsis' %>
       <% end %>
     </div>
   </div>
@@ -17,8 +17,9 @@
                  collection: current_refinery_user.active_plugins.in_menu -%>
     </ul>
   </div>
-  <%= link_to t('.log_out', site_bar_translate_locale_args),
+  <%= link_to (t('.log_out', site_bar_translate_locale_args) + ' <i class="icon icon-log-out"></i>').html_safe,
               ::Refinery::Core.refinery_logout_path,
               :id => 'logout',
               :class => 'log-out' if ::Refinery::Core.refinery_logout_path.present? %>
 </section>
+
