@@ -1,5 +1,5 @@
 <%% content_for :title do %>
-  <%%= @<%= singular_name %><% if (title = attributes.detect { |a| a.type.to_s == "string" }).present? %>.<%= title.name %><% else %>.title<% end %> %>
+  <%%=raw @<%= singular_name %><% if (title = attributes.detect { |a| a.type.to_s == "string" }).present? %>.<%= title.name %><% else %>.title<% end %> %>
 <%% end %>
 
 <section id="cover" style="height: 200px">
