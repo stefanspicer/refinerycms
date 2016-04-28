@@ -155,6 +155,10 @@ var DatePickerWrapper = (function($){
     $wrapper.find('input.date-only').change(function(e){
       inputFieldChanged(this);
     });
+
+    if ($ioElem.val()) {
+      saveDate(); // set the initial date format and timezone with JS (its impossible to get it right on the server)
+    }
   };
 
   /**
