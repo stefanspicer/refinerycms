@@ -225,13 +225,11 @@ var DatePickerWrapper = (function($){
     var newMoment;
 
     if(isTime){
-      newMoment = moment('10:00 AM', 'H:mm A');
-      $inputField.val(newMoment.format('H:mm A'));
-      setDateTimePickerDateTime($dp, isTime, newMoment);
+      $inputField.val(initialDate.format('H:mm A'));
+      setDateTimePickerDateTime($dp, isTime, initialDate);
     } else {
-      newMoment = moment();
-      $inputField.val(newMoment.format(inputfieldFormat));
-      setDateTimePickerDateTime($dp, isTime, newMoment);
+      $inputField.val(initialDate.format(inputfieldFormat));
+      setDateTimePickerDateTime($dp, isTime, initialDate);
     }
   }
 
