@@ -90,14 +90,24 @@ var DatePickerWrapper = (function($){
     var initialDateStr = $ioElem.val() ? $ioElem.val() : (configInitialDate ? configInitialDate : $wrapper.data('initial-date'));
     var localzone = initialDateStr.match(new RegExp('^(.+)#LOCALZONE$'));
     if (localzone) { initialDateStr = localzone[1];}
+    var zone_str = '';
     var initialDate = moment(initialDateStr, moment.ISO_8601);
-    if (!useBrowserTimezone) { // '.utcOffset()' of the DB value, use the server's time zone (not the browser's)
-      initialDate.utcOffset(initialDateStr);
+
+    if (useBrowserTimezone) {
+      if (localzone) { // Adjust the time: TREAT AS IF this time was in the browser's timezone
+        initialDate.add(moment().utcOffset(initialDateStr).utcOffset() - initialDate.utcOffset(), 'm');
+      }
+      var matches = new Date().toString().match(new RegExp('(\\(.+?\\))$'));
+      if (matches) {
+        zone_str = matches[1];
+      }
     }
-    else if (localzone) { // Override the zone as if this time was in the browser timezone
-      initialDate.add(moment().utcOffset(initialDateStr).utcOffset() - initialDate.utcOffset(), 'm');
+    else { // '.utcOffset(...)' of the DB value, use the server's time zone (not the browser's)
+      initialDate.utcOffset(initialDateStr);
+      zone_str = '(' + ($btn.data('timezone') || 'UTC') + ')';
     }
     $dp.date(initialDate);
+    $wrapper.find('.cur-time-zone').html(zone_str);
 
     /**
      * Toggles the visiblity of the dp
