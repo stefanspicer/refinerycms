@@ -88,10 +88,14 @@ var DatePickerWrapper = (function($){
 
     // Prefer an already saved date ($ioElem), then a configured one, the wrapper is a last resort (for the timezone)
     var initialDateStr = $ioElem.val() ? $ioElem.val() : (configInitialDate ? configInitialDate : $wrapper.data('initial-date'));
+    var localzone = initialDateStr.match(new RegExp('^(.+)#LOCALZONE$'));
+    if (localzone) { initialDateStr = localzone[1];}
     var initialDate = moment(initialDateStr, moment.ISO_8601);
-    if (!useBrowserTimezone) {
-      // '.utcOffset()' of the DB value allows us to use the server's time zone instead of the browser's
+    if (!useBrowserTimezone) { // '.utcOffset()' of the DB value, use the server's time zone (not the browser's)
       initialDate.utcOffset(initialDateStr);
+    }
+    else if (localzone) { // Override the zone as if this time was in the browser timezone
+      initialDate.add(moment().utcOffset(initialDateStr).utcOffset() - initialDate.utcOffset(), 'm');
     }
     $dp.date(initialDate);
 
