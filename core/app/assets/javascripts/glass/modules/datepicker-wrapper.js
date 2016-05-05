@@ -106,8 +106,8 @@ var DatePickerWrapper = (function($){
       $btn.addClass('toggled');
       $wrapper.toggleClass('active');
 
-      if (!$wrapper.hasClass('active')) {
-        saveDate();
+      if (!$wrapper.hasClass('active') && $dp !== undefined) {
+        saveDate($(this).hasClass('clear') ? null : $dp.date());
       }
     };
 
@@ -115,23 +115,21 @@ var DatePickerWrapper = (function($){
      * Save the chosen datetime - the datepicker is closing
      * @return undefined
      */
-    var saveDate = function (e) {
-      if($dp !== undefined){
-        var callback = $btn.data('on-date-change');
-        if (callback) {
-          callback($dp.date());
-        }
-
-        if (btnFormat != 'manual') {
-          var $to_replace = $btn.find('.update-date');
-          if ($to_replace.length == 0) {
-            $to_replace = $btn;
-          }
-          $to_replace.html($dp.date().format(btnFormat));
-        }
-
-        $ioElem.val(dateOnly ? $dp.date().format('YYYY-MM-DD') : $dp.date().toISOString());
+    var saveDate = function (date) {
+      var callback = $btn.data('on-date-change');
+      if (callback) {
+        callback(date);
       }
+
+      if (btnFormat != 'manual') {
+        var $to_replace = $btn.find('.update-date');
+        if ($to_replace.length == 0) {
+          $to_replace = $btn;
+        }
+        $to_replace.html(date ? date.format(btnFormat) : "Choose Date");
+      }
+
+      $ioElem.val(!date ? '' : (dateOnly ? date.format('YYYY-MM-DD') : date.toISOString()));
     };
 
     // When either the close button or the button that opens the datepicker are clicked,
@@ -156,8 +154,8 @@ var DatePickerWrapper = (function($){
       inputFieldChanged(this);
     });
 
-    if ($ioElem.val()) {
-      saveDate(); // set the initial date format and timezone with JS (its impossible to get it right on the server)
+    if ($ioElem.val() && $dp !== undefined) {
+      saveDate($dp.date()); // set the initial date format and timezone with JS (its impossible to get it right on the server)
     }
   };
 
