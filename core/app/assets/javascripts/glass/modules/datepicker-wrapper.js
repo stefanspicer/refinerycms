@@ -27,7 +27,7 @@ var DatePickerWrapper = (function($){
    * @return {undefined}
    */
   var initDatePicker = function($btn) {
-    var $wrapper = $btn.parent().find('.datepicker-wrapper');
+    var $wrapper = $btn.data('datepicker-selector') ? $($btn.data('datepicker-selector')) : $btn.parent().find('.datepicker-wrapper');
     var $dpElement = $wrapper.find('.inline-dp-root');
     var $ioElem = $($btn.data('io-selector'));
     var dateOnly = $btn.hasClass('date-only');
@@ -250,6 +250,12 @@ var DatePickerWrapper = (function($){
     $ioElem.val('');
   }
 
+  function resetForReuse($wrapper) {
+    $wrapper.removeClass('active');
+    $wrapper.find('.close-dp').unbind();
+    $wrapper.find('input').unbind();
+  }
+
   function setDateTimePickerDateTime($dp, isTime, newMomentObject){
     if($dp !== undefined){
       var currentDate = $dp.date();
@@ -284,6 +290,7 @@ var DatePickerWrapper = (function($){
 
   // Return API for other modules
   return {
+    resetForReuse: resetForReuse,
     reset: resetDP
   };
 })(jQuery);
