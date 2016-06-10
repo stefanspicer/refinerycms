@@ -1,13 +1,13 @@
 <% admin = false unless defined?(admin) %>
 
 <% if admin %>
-  <%= stylesheet_link_tag "refinery-glass" %>
+  <%= stylesheet_link_tag "refinery-glass", media: "all" %>
   <%#= stylesheet_link_tag 'refinery/refinery' %>
   <% custom_stylesheets.each do |css| %>
     <%= stylesheet_link_tag css.path, css.options %>
   <% end %>
 <% else %>
-  <%= stylesheet_link_tag "site" %>
+  <%= stylesheet_link_tag "site", media: "all" %>
 <% end %>
 
 <%= yield :stylesheets %>
