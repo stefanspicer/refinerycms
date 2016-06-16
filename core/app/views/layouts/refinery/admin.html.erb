@@ -50,28 +50,8 @@ html
   <body class="<%= yield :body_class %> <%= action_name %> <%= I18n.locale %> cms-interface">
     <%#= render '/glass/alerts_status' %>
 
-    <button type="button" class="btn btn-primary sidebar-left-opener fixed-t-l z-5 hidden-sm-up"><i class="icon icon-bars"></i></button>
-
     <% if !defined?(@hide_main_nav) || !@hide_main_nav %>
-      <section id="sidebar-left" class="sidebar left inverted cms-ui">
-        <div class="sidebar-top-nav">
-          <button type="button" class="btn btn-white sidebar-left-opener abs-t-l z-5 hidden-sm-up"><i class="icon icon-close"></i></button>
-          <div class="site-name">
-            <% if content_for?(:custom_sidebar_header_link) %>
-              <%= yield :custom_sidebar_header_link %>
-            <% else %>
-              <i class="icon icon-glass-canvas hidden-xs-up"></i> <%= link_to Refinery::Core.site_name, '/', :class => 'ellipsis' %>
-            <% end %>
-          </div>
-        </div>
-        <div id="sidebar-left-inner" class="sidebar-inner">
-          <%= render 'refinery/admin/menu' %>
-        </div>
-        <%= link_to (t('.log_out', site_bar_translate_locale_args) + ' <i class="icon icon-log-out"></i>').html_safe,
-                    ::Refinery::Core.refinery_logout_path,
-                    :id => 'logout',
-                    :class => 'log-out' if ::Refinery::Core.refinery_logout_path.present? %>
-      </section>
+      <%= render 'refinery/admin/menu' %>
     <% end %>
 
     <%= yield :body_top %>

@@ -1,20 +1,20 @@
 module Refinery
   class Plugin
     META = {
-      "refinery_dashboard"    => {position: 0 , icon: 'icon icon-dashboard'},
-      "refinery_pages"        => {position: 5, icon: 'icon icon-pages'     },
-      "refinerycms_blog"      => {position: 15, icon: 'icon icon-feather'  },
-      "refinerycms_inquiries" => {position: 85, icon: 'icon icon-chat'     },
-      "refinery_settings"     => {position: 0 , icon: 'icon icon-wrench'   }, #hide
-      "refinery_images"       => {position: 0 , icon: 'icon icon-wrench'   }, #hide
-      "refinery_files"        => {position: 0 , icon: 'icon icon-wrench'   }, #hide
+      "refinery_dashboard"    => {position: 0 },
+      "refinery_pages"        => {position: 5 },
+      "refinerycms_blog"      => {position: 15},
+      "refinerycms_inquiries" => {position: 85},
+      "refinery_settings"     => {position: 0 }, #hide
+      "refinery_images"       => {position: 0 }, #hide
+      "refinery_files"        => {position: 0 }, #hide
     }
 
-    META.default     =  {position: 50, icon: 'icon icon-wrench'}
+    META.default     =  {position: 50}
 
     attr_accessor :name, :class_name, :controller, :directory, :url,
                   :always_allow_access, :menu_match, :hide_from_menu,
-                  :pathname
+                  :pathname, :icon
 
     def self.register(&_block)
       yield(plugin = new)
@@ -25,6 +25,9 @@ module Refinery
       plugin.menu_match ||= %r{refinery/#{plugin.name}(/.+?)?$}
       plugin.always_allow_access ||= false
       plugin.class_name ||= plugin.name.camelize
+      plugin.icon ||= 'icon icon-wrench'
+      # plugin.icon available values could be found in this file :
+      # core/app/assets/stylesheets/glass/components/_icons.scss
 
       # add the new plugin to the collection of registered plugins
       ::Refinery::Plugins.registered.unshift plugin
@@ -85,17 +88,6 @@ module Refinery
 
     def position=(val)
       @position = val
-    end
-
-    def icon
-      icons_override = Refinery::Core.config.backend_menu_icons
-      return icons_override[self.name] if icons_override.present? && icons_override.has_key?(self.name)
-      return @icon_str                 if @icon_str
-      return Refinery::Plugin::META[self.name][:icon]
-    end
-
-    def icon=(val)
-      @icon_str = val
     end
 
     def show_for_superuser_only=(val)

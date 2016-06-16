@@ -17,6 +17,7 @@ module Refinery
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
           plugin.name = 'refinery_files'
+          plugin.icon = 'icon icon-export'
           plugin.menu_match = /refinery\/(refinery_)?(files|resources)$/
           plugin.always_allow_access = true
           plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.admin_resources_path }
