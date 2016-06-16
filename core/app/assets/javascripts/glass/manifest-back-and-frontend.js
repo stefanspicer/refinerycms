@@ -8,7 +8,7 @@
 //= require glass/jquery.form.min
 // bootstrap depends on tether
 //= require glass/tether.min
-//= require glass/bootstrap.min
+//= require bootstrap-sprockets
 //= require glass/gestures/hammer.min
 //= require glass/form-validation
 //= require glass/modules/forms
