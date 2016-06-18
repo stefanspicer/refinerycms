@@ -1,0 +1,9 @@
+.site-name {@include icon('bars', $plugin_icon_colour, $margin: 1.2em)}
+
+.refinery_images_icon {@include icon('photo', $plugin_icon_colour, $margin: 1.2em)}
+.refinery_pages_icon {@include icon('files', $plugin_icon_colour, $margin: 1.2em)}
+.refinery_files_icon {@include icon('file', $plugin_icon_colour, $margin: 1.2em)}
+.refinery_authentication_devise_icon {@include icon('user', $plugin_icon_colour, $margin: 1.2em  )}
+
+.logout_icon  {@include icon('log-out', $plugin_icon_colour, $margin: 1.2em)}
+
