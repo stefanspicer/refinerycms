@@ -22,11 +22,11 @@
         <%= render partial: "refinery/admin/menu_item",
                    collection: current_refinery_user.active_plugins.in_menu -%>
       </ul>
-      <%= link_to Refinery::Core.refinery_logout_path, id:'logout', class: ['log-out', 'logout_icon'] do %>
-        <%= t('.log_out', site_bar_translate_locale_args) %>
-      <% end if Refinery::Core.refinery_logout_path.present? %>
     </div>
 
-
+    <%= link_to Refinery::Core.refinery_logout_path, id:'logout', class: 'log-out' do %>
+      <%= t('.log_out', site_bar_translate_locale_args) %>
+      <%= content_tag(:i, nil, class: 'icon icon-log-out') %>
+    <% end if Refinery::Core.refinery_logout_path.present? %>
   </section>
 </nav>

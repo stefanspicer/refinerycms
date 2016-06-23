@@ -87,13 +87,12 @@
       width: 100%;
     }
     position: fixed;
-    left: 0;
+    right: 0;
     bottom: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // width: 260px;
-    width: 45px;
+    width: 260px;
     padding: 9px 15px;
     font-size: 16px;
     font-weight: 600;
@@ -104,18 +103,11 @@
     transition: .2s .3s ease-out;
     transform: translate3d(0%, 0%, 0);
     &:hover {
+      color: $white;
       background: $cms-hover;
-      color: $cms-dark;
-      &::before {
-        color: $cms-dark;
-      }
-      @include media-breakpoint-up(sm) {
-        width: 260px;
-        transition: .2s ease-out;
-      }
     }
   }
-  
+
   li {
     margin: 0 0 1px;
     white-space: nowrap;
