@@ -19,6 +19,7 @@ var GlassInfiniteScroll = (function ($) {
       });
 
       $(window).on('scroll', loadMoreItems);
+      loadMoreItems();
     }
   });
 
