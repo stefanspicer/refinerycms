@@ -39,7 +39,7 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  height: 45px;
+  height: $sidebar-sm;
   padding: 5px 15px;
   font-size: 14px;
   .icon {
@@ -62,16 +62,16 @@ body {
     top: 0;
     overflow: hidden;
     width: 100%;
-    height: 65px;
+    height: 4rem;
     white-space: nowrap;
     background: $gray-1;
   }
   .sidebar-inner {
     z-index: 1002;
-    top: 65px;
+    top: 4rem;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 15px;
+    padding-bottom: 1rem;
   }
 }
 
@@ -80,12 +80,12 @@ body {
     z-index: 1037;
     width: 0;
   }
-  width: 45px;
+  width: $sidebar-sm;
   transition: .2s .3s ease-out;
   transform: translate3d(0%, 0%, 0);
   &:hover {
     @include media-breakpoint-up(sm) {
-      width: 260px;
+      width: $sidebar-md;
       transition: .2s ease-out;
     }
   }
@@ -102,15 +102,14 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 260px;
-      height: 65px;
-      padding: 18px 15px;
+      width: $sidebar-md;
+      height: 4rem;
+      padding: 1rem;
       text-align: right;
       background: $gray-1;
       a {
-        font-size: 21px;
+        font-size: 1.25rem;
         font-weight: 600;
-        line-height: 20px;
         color: $gray-6;
         &:hover {
           color: $cms-dark;
@@ -120,7 +119,7 @@ body {
     .icon-glass-canvas {
       display: inline !important;
       visibility: visible !important;
-      margin: 0 10px 0 0;
+      margin: 0 .75rem 0 0;
       color: $gray-5;
     }
   }
@@ -140,7 +139,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 260px;
+    width: $sidebar-md;
     padding: 9px 15px;
     font-size: 16px;
     font-weight: 600;
@@ -152,7 +151,7 @@ body {
       background: $cms-hover;
     }
     .icon {
-      left: 3px;
+      left: -1px;
     }
   }
   li {
@@ -167,9 +166,7 @@ body {
       @include transition-fix();
       @include ellipsis(100%);
       display: block;
-      width: 100%;
-      min-width: 200px;
-      padding: 10px 15px 6px;
+      padding: .5rem 1rem;
       font-size: 16px;
       font-weight: 400;
       transition: .1s $bezier;
@@ -186,8 +183,8 @@ body {
         }
       }
       > .icon {
-        min-width: 18px;
-        margin-right: 8px;
+        min-width: 1rem;
+        margin-right: .75rem;
       }
     }
     .active {
@@ -223,7 +220,7 @@ body {
 .sidebar.right {
   z-index: 1037;
   right: 0;
-  width: 350px;
+  width: $sidebar-lg;
   transform: translate3d(100%, 0, 0);
   border-left: 1px solid $gray-2;
   &.active {
@@ -238,7 +235,7 @@ body {
   .sidebar-inner {
     height: calc(100% - 62px);
     .page-options {
-      padding: 0 0 45px 0;
+      padding: 0 0 $sidebar-sm 0;
       .glass-edit {
         min-height: 23px;
         color: $cms-dark;

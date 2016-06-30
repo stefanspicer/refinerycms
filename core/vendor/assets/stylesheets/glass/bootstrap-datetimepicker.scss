@@ -13,19 +13,19 @@
   padding: 4px;
 }
 
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
   .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {
     width: 38em;
   }
 }
 
-@media (min-width: 992px) {
+@include media-breakpoint-down(lg) {
   .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {
     width: 38em;
   }
 }
 
-@media (min-width: 1200px) {
+@include media-breakpoint-down(xl) {
   .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {
     width: 38em;
   }
