@@ -1571,6 +1571,10 @@ select:focus {
     }
     .glass-edit {
       z-index: 950;
+      h1, h2, h3, h4, h5, h6, p {
+        color: $gray-6 !important;
+      }
+      color: $gray-6 !important;
     }
     .navbar {
       z-index: 850;
