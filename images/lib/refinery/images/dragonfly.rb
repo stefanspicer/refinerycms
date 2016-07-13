@@ -27,6 +27,14 @@ module Refinery
               content.process!(:convert, '-strip')
             end
             verify_urls false
+
+            if Refinery::Images.dragonfly_use_local_cache
+              before_serve do |job, env|
+                # store in /public dir for apache or nginx to serve up directly next time
+                # NOTE: this is essensially caching it indefinitely
+                job.to_file("#{Rails.root}/public#{app_images.server.url_for(job).sub(/\?.*$/, '')}.#{job.ext}")
+              end
+            end
           end
 
           if ::Refinery::Images.s3_backend
