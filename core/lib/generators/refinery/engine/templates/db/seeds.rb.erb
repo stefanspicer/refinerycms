@@ -29,10 +29,15 @@ Refinery::I18n.frontend_locales.each do |lang|
 <%   end -%>
     Refinery::Pages.default_parts.each_with_index do |part, index|
       page.parts.build title: part[:title], slug: part[:slug], body: nil, position: index
-<%   if include_form? -%>
+<%    if include_form? -%>
       thank_you_page.parts.build title: part[:title], slug: part[:slug], body: nil, position: index
-<%   end -%>
+<%    end -%>
     end
+
+<%  if include_form? -%>
+    thank_you_page.save!
+<%  end -%>
+    page.save!
   end
 <% end -%>
 end
