@@ -58,7 +58,7 @@ module Refinery
             page.show_in_menu = false
 
             expect(helper.page_meta_information(page)).to eq(
-              %Q{<span class="label">#{::I18n.t('refinery.admin.pages.page.hidden')}</span>}
+              %Q{<span class="tag tag-default">#{::I18n.t('refinery.admin.pages.page.hidden')}</span>}
             )
           end
         end
@@ -68,7 +68,7 @@ module Refinery
             page.draft = true
 
             expect(helper.page_meta_information(page)).to eq(
-              %Q{<span class="label notice">#{::I18n.t('refinery.admin.pages.page.draft')}</span>}
+              %Q{<span class="tag tag-default notice">#{::I18n.t('refinery.admin.pages.page.draft')}</span>}
             )
           end
         end

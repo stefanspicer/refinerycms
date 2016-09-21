@@ -57,7 +57,7 @@
           <div class="sidebar-section-body">
             <div class='form-group'>
               <%= f.select :view_template, @valid_view_templates.map { |t| [t.titleize, t] },
-                             template_options(:view_template, @page), {class: 'form-control c-select'}  %>
+                             template_options(:view_template, @page), {class: 'form-control custom-select'}  %>
             </div>
           </div>
           <% if Refinery::Pages.use_layout_templates %>
@@ -65,7 +65,7 @@
               <div class='form-group'>
                 <%= f.label  :layout_template, t('.layout_template'), :title => t('.layout_template_help') %>
                 <%= f.select :layout_template, valid_layout_templates,
-                             template_options(:layout_template, @page), {class: 'form-control c-select'} %>
+                             template_options(:layout_template, @page), {class: 'form-control custom-select'} %>
               </div>
             </div>
           <% end %>

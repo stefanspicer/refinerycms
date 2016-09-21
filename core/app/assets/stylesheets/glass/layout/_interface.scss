@@ -280,7 +280,7 @@ body {
         color: $gray-6;
       }
       .settings-collapse {
-        .custom-select, .c-select {
+        .custom-select, .custom-select {
           margin-bottom: 10px;
         }
       }
@@ -353,7 +353,7 @@ body {
         margin-bottom: 0;
       }
       .form-group {
-        label {
+       .tag {
           margin: 0;
         }
       }
@@ -372,7 +372,7 @@ body {
           margin-bottom: 0;
         }
       }
-      .control-label {
+      .control.tag {
         font-weight: 600;
       }
     }

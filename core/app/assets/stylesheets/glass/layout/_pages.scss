@@ -288,7 +288,7 @@
       margin-bottom: 15px;
     }
     .checkbox {
-      label {
+     .tag {
         padding-top: 5px;
       }
       input[type="checkbox"] {
@@ -361,7 +361,7 @@
             }
             .page-title {
               color: $white;
-              .label {
+              .tag {
                 color: $cms-hover !important;
                 background: $white !important;
               }
@@ -414,7 +414,7 @@
             }
             .page-title {
               color: $gray-6;
-              .label {
+              .tag {
                 color: $white;
                 background: $gray-3;
               }
@@ -456,36 +456,6 @@
           }
           .icon-folder-open {
             display: none;
-          }
-        }
-        .page-title {
-          @include ellipsis(100%);
-          @include media-breakpoint-up(md) {
-            padding-right: 90px;
-          }
-          display: flex;
-          align-items: center;
-          align-content: center;
-          padding: 10px 0;
-          padding-right: 30px;
-          transition: 0;
-          color: $gray-6;
-          .title {
-            @include ellipsis(auto);
-          }
-          .label {
-            @include media-breakpoint-down(sm) {
-              display: none;
-            }
-            flex-shrink: 0;
-            margin-left: .5rem;
-            padding: 2px 8px;
-            font-weight: 600;
-            text-transform: capitalize;
-            background: $gray-3;
-            &:first-of-type {
-              margin-left: 1rem;
-            }
           }
         }
         .attribute {
@@ -551,6 +521,36 @@
             margin-left: 5px;
             text-align: center;
           }
+        }
+      }
+    }
+    .page-title {
+      @include ellipsis(100%);
+      @include media-breakpoint-up(md) {
+        padding-right: 90px;
+      }
+      display: flex;
+      align-items: center;
+      align-content: center;
+      padding: 10px 0;
+      padding-right: 30px;
+      transition: 0;
+      color: $gray-6;
+      .title {
+        @include ellipsis(auto);
+      }
+      .tag {
+        @include media-breakpoint-down(sm) {
+          display: none;
+        }
+        flex-shrink: 0;
+        margin-left: .5rem;
+        padding: 2px 8px;
+        font-weight: 600;
+        text-transform: capitalize;
+        background: $gray-3;
+        &:first-of-type {
+          margin-left: 1rem;
         }
       }
     }

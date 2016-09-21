@@ -1190,7 +1190,7 @@ p {
 /* -------------------- FORMS -------------------- */
 
 .form-control,
-.custom-select, .c-select,
+.custom-select, .custom-select,
 textarea {
   &:hover {
     border-color: $gray-3;
@@ -1208,7 +1208,7 @@ label {
   text-align: right;
 }
 
-.custom-select, .c-select {
+.custom-select, .custom-select {
   border-radius: $input-border-radius;
   &.form-control-lg {
     padding: .75rem 1.25rem;
@@ -1224,7 +1224,7 @@ label {
   box-shadow: 0 0 3px 0 rgba($gray-6,.35);
 }
 
-.custom-select:focus, .c-select:focus {
+.custom-select:focus, .custom-select:focus {
   border-color: $gray-5;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px 0 rgba($gray-6,.15);
 }
@@ -1254,7 +1254,7 @@ select:focus {
 
 .placeholder-labels {
   .form-group {
-    label {
+   .tag {
       @include ellipsis(auto);
       position: absolute;
       top: $input-padding-y;
@@ -1282,7 +1282,7 @@ select:focus {
         visibility: hidden;
         opacity: 0;
       }
-      & + label {
+      & +.tag {
         top: 0;
         opacity: 1;
       }
@@ -1292,7 +1292,7 @@ select:focus {
     &:focus {
       padding-top: $input-padding-y-lg + .85rem;
     }
-    & + label {
+    & +.tag {
       left: $input-padding-x-lg;
     }
   }
